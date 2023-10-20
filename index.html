@@ -72,15 +72,15 @@
             <button class="square-button" onclick="buttonPress('9')">9</button>
             <button class="square-button" onclick="buttonPress('0')">0</button>
             <p></p>
-            <button class="function-button" onclick="operatorButtonPressed('M')">Multiply</button>
-            <button class="function-button" onclick="operatorButtonPressed('D')">Divide</button>
-            <button class="function-button" onclick="operatorButtonPressed('A')">Add</button>
-            <button class="function-button" onclick="operatorButtonPressed('S')">Subtract</button>
+            <button class="function-button" onclick="operatorButtonPressed('M')">*</button>
+            <button class="function-button" onclick="operatorButtonPressed('D')">/</button>
+            <button class="function-button" onclick="operatorButtonPressed('A')">+</button>
+            <button class="function-button" onclick="operatorButtonPressed('S')">-</button>
             <p></p>
-            <button id="clear" class="function-button">clear</button>
-            <button class="function-button" onclick="equals('Equals')">Equals</button>
+            <button class="function-button" onclick="equals()">Equals</button>
+            <button class="function-button" onclick="clear()">clear</button>
 
-        </buttons>
+        </div>
         </div>
     </div>
 
@@ -90,29 +90,42 @@
         let secondVariable=null;
         let operatorRecord=null;
         displayOutput(outputString);
-
+           
+           
+            
 
             function operatorButtonPressed(operatorSelected) {
                 operatorRecord = operatorSelected;
-                if (firstVariable ===null) {
-                firstVariable=parseInt(outputString);
-                outputString="";
-                } else if (firstVariable !== null) { secondVariable=parseInt(outputString);
-                outputString="";
-                }
+            if (firstVariable === null) {
+                firstVariable = parseInt(outputString);
+                outputString = "0";
+            } 
+            if (firstVariable !== null) {
+                secondVariable = parseInt(outputString);
+                outputString = "0";
+            }
             }
 
+
+
+
             function equals() {
-                secondVariable = parseFloat(outputString);
-                answer = calculate();
-                displayOutput(answer);
-                outputString="";       
-                firstVariable=answer;
+                secondVariable=parseInt(outputString)
+                let result = calculate();
+                outputString=result
+                displayOutput(outputString);
+                firstVariable=null;
                 secondVariable=null;
-                operatorRecord =null;
             }
-            
-            
+     
+            function clear() {
+               outputString="0";
+               firstVariable=null;
+               secondVariable=null;
+               operatorRecord=null;
+               displayOutput(outputString);
+            }
+
             function calculate() {
                 if (isNaN(secondVariable)) {
                     secondVariable = firstVariable;
@@ -126,7 +139,7 @@
                 } else if (operatorRecord === "S") {
                 return subFunction(firstVariable, secondVariable);
                 } else {
-                return 0;
+                return 80085;
                 }
             }
 
@@ -145,7 +158,7 @@
                 }
             displayOutput(outputString);
             }
-
+            
         function displayOutput(output) {
             var contentDiv = document.getElementById('outputBox');
             contentDiv.getElementsByTagName('p')[0].textContent = output;
