@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Simple Calculator for the Odin Project</title>
+    <style>
+        .square-button {
+            width: 50px;
+            height: 50px;
+            background-color: blue;
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 15px 1px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .function-button {
+            width: 75px;
+            height: 50px;
+            background-color: grey;
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 5px 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .output-box-style {
+            width: 300px;
+            height: 40px;
+            background-color: grey;
+            border: 1px;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 1px 1px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .centered-div {
+            display: grid;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="containerBox" class="centered-div">
+        <div id="outputBox" class="output-box-style">
+            <p>Output</p>
+            <p></p>
+        </div>
+        <div id="buttons">
+            <button class="square-button" onclick="buttonPress('1')">1</button>
+            <button class="square-button" onclick="buttonPress('2')">2</button>
+            <button class="square-button" onclick="buttonPress('3')">3</button>
+            <button class="square-button" onclick="buttonPress('4')">4</button>
+            <button class="square-button" onclick="buttonPress('5')">5</button>
+            <button class="square-button" onclick="buttonPress('6')">6</button>
+            <button class="square-button" onclick="buttonPress('7')">7</button>
+            <button class="square-button" onclick="buttonPress('8')">8</button>
+            <button class="square-button" onclick="buttonPress('9')">9</button>
+            <button class="square-button" onclick="buttonPress('0')">0</button>
+            <p></p>
+            <button class="function-button" onclick="operatorButtonPressed('M')">Multiply</button>
+            <button class="function-button" onclick="operatorButtonPressed('D')">Divide</button>
+            <button class="function-button" onclick="operatorButtonPressed('A')">Add</button>
+            <button class="function-button" onclick="operatorButtonPressed('S')">Subtract</button>
+            <p></p>
+            <button id="clear" class="function-button">clear</button>
+            <button class="function-button" onclick="equals('Equals')">Equals</button>
+
+        </buttons>
+        </div>
+    </div>
+
+    <script>
+        let outputString="0";
+        let firstVariable=null;
+        let secondVariable=null;
+        let operatorRecord=null;
+        displayOutput(outputString);
+
+
+            function operatorButtonPressed(operatorSelected) {
+                operatorRecord = operatorSelected;
+                if (firstVariable ===null) {
+                firstVariable=parseInt(outputString);
+                outputString="";
+                } else if (firstVariable !== null) { secondVariable=parseInt(outputString);
+                outputString="";
+                }
+            }
+
+            function equals() {
+                secondVariable = parseFloat(outputString);
+                answer = calculate();
+                displayOutput(answer);
+                outputString="";       
+                firstVariable=answer;
+                secondVariable=null;
+                operatorRecord =null;
+            }
+            
+            
+            function calculate() {
+                if (isNaN(secondVariable)) {
+                    secondVariable = firstVariable;
+                }
+                if (operatorRecord === "M") {
+                return multiplyFunction(firstVariable, secondVariable);
+                } else if (operatorRecord === "A") {
+                return addFunction(firstVariable, secondVariable);
+                } else if (operatorRecord === "D") {
+                return divideFunction(firstVariable, secondVariable);
+                } else if (operatorRecord === "S") {
+                return subFunction(firstVariable, secondVariable);
+                } else {
+                return 0;
+                }
+            }
+
+            function multiplyFunction(a,b) { return a*b }
+            function addFunction(a,b) { return a+b }
+            function divideFunction(a,b) {return a/b }
+            function subFunction(a,b) { return a-b }
+
+            function buttonPress(numberString) {
+                if (outputString === "0" && numberString === "0") {
+                    return;    
+                } else if (outputString === "0") {
+                    outputString = numberString;
+                } else {
+                    outputString = outputString + numberString;
+                }
+            displayOutput(outputString);
+            }
+
+        function displayOutput(output) {
+            var contentDiv = document.getElementById('outputBox');
+            contentDiv.getElementsByTagName('p')[0].textContent = output;
+        }
+
+
+        </script>
+</body>
+</html>
